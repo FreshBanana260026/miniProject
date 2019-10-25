@@ -25,16 +25,16 @@ type Size =
     | Medium
     | Small;;
 
-type DrinkType =
-    | Latte
-    | Cappuccino
-    | Cortado
-    | Monster
-    | Redbull
-    | Tuborg
-    | Smoothie
-    | Drikkeyoghurt
-    | Sodavand;;
+//type DrinkType =
+//    | Latte
+//    | Cappuccino
+//    | Cortado
+//    | Monster
+//    | Redbull
+//    | Tuborg
+//    | Smoothie
+//    | Drikkeyoghurt
+//    | Sodavand;;
 
 type Drink = {Name: DrinkType; Form: Form; Size: Size}
 
