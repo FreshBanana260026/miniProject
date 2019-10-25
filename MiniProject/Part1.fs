@@ -4,9 +4,21 @@ open System.Text
 open System.Text
 
 type Form =
-    | Bottle
-    | Cup
-    | Can;;
+    {   Can: string
+        Cup: string
+        Bottle: string
+    }
+
+//
+//let formRecord = {Can = "Can"; Cup = "Cup"; Bottle = "Bottle"}
+//
+//let evaluateForm (form: Form) =
+//    match form with
+//    | { Can = "Can" } -> printf "This is canned drink"
+//    | { Cup = "Cup" } -> printf "This is cupped drink"
+//    | { Bottle = "Bottle"} -> printf "this is bottled drink"
+//
+//evaluateForm { Can = "Can" }
 
 type Size =
     | Large
@@ -31,5 +43,3 @@ let price (drink: Drink) =
      | Large -> 20
      | Medium -> 15
      | Small -> 10;;
-
-let x = {Name= Latte; Form = Cup; Size = Medium};;
