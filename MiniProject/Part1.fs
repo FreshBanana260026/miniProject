@@ -3,11 +3,16 @@
 open System.Text
 open System.Text
 
+//type Form =
+//    {   Can: string
+//        Cup: string
+//        Bottle: string
+//    }
+
 type Form =
-    {   Can: string
-        Cup: string
-        Bottle: string
-    }
+    | Bottle
+    | Cup
+    | Can;;
 
 //
 //let formRecord = {Can = "Can"; Cup = "Cup"; Bottle = "Bottle"}
@@ -36,10 +41,17 @@ type Size =
 //    | Drikkeyoghurt
 //    | Sodavand;;
 
-type Drink = {Name: DrinkType; Form: Form; Size: Size}
+type Drink = {name: string; Form: Form; Size: Size}
+
+let packingPricce (form: Form) =
+    match form with
+    | Bottle -> 3
+    | Cup -> 2
+    | Can -> 1;;
 
 let price (drink: Drink) =
+    let pricecOfContainer = packingPricce drink.Form
     match drink.Size with
-     | Large -> 20
-     | Medium -> 15
-     | Small -> 10;;
+     | Large -> 20 + pricecOfContainer
+     | Medium -> 15 + pricecOfContainer
+     | Small -> 10 + pricecOfContainer;;
