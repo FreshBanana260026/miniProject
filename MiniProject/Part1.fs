@@ -30,7 +30,10 @@ type Size =
     | Medium
     | Small;;
 
-//type DrinkType =
+type DrinkType =
+    | Coffee of string
+    | Soda of string
+    | Other of string
 //    | Latte
 //    | Cappuccino
 //    | Cortado
@@ -41,7 +44,7 @@ type Size =
 //    | Drikkeyoghurt
 //    | Sodavand;;
 
-type Drink = {name: string; Form: Form; Size: Size}
+type Drink = {DrinkType: DrinkType; Form: Form; Size: Size}
 
 let packingPricce (form: Form) =
     match form with
@@ -55,3 +58,34 @@ let price (drink: Drink) =
      | Large -> 20 + pricecOfContainer
      | Medium -> 15 + pricecOfContainer
      | Small -> 10 + pricecOfContainer;;
+
+let ViaVAT (n:int) (x:float) =
+    let per = ((x+ 100.0)/100.0)
+    float n * per
+
+type CanteenMessage = 
+    | OrderDrink of Drink * int
+    | LeaveAComment of string
+
+let taxer (d:Drink) =
+    match d.DrinkType with
+     | Coffee c -> ViaVAT (price d) 30.0
+     | _ -> float (price d)
+
+let bcssCanteenDrinkAgent = MailboxProcessor<CanteenMessage>.Start(fun inbox->
+    let rec msgLoop= async{ 
+        let! (msg:CanteenMessage) = inbox.Receive()
+        match msg with
+         | OrderDrink(d,qty) -> printfn "The price for your %i drink/drinks is: %1.2f DKK." qty ((float qty) * (taxer d))
+         | LeaveAComment(c) -> printf "The comment for the canteen oeprators has been received with the following content: %s" c
+        return! msgLoop
+    }
+    msgLoop)
+
+let c = LeaveAComment("Aloha")
+bcssCanteenDrinkAgent.Post(c)
+
+
+let x = {DrinkType = Coffee("Latte"); Form = Cup; Size = Medium};;
+let o = OrderDrink(x, 3)
+bcssCanteenDrinkAgent.Post(o)
