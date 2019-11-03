@@ -3,27 +3,10 @@
 open System.Text
 open System.Text
 
-//type Form =
-//    {   Can: string
-//        Cup: string
-//        Bottle: string
-//    }
-
 type Form =
     | Bottle
     | Cup
     | Can;;
-
-//
-//let formRecord = {Can = "Can"; Cup = "Cup"; Bottle = "Bottle"}
-//
-//let evaluateForm (form: Form) =
-//    match form with
-//    | { Can = "Can" } -> printf "This is canned drink"
-//    | { Cup = "Cup" } -> printf "This is cupped drink"
-//    | { Bottle = "Bottle"} -> printf "this is bottled drink"
-//
-//evaluateForm { Can = "Can" }
 
 type Size =
     | Large
@@ -34,15 +17,6 @@ type DrinkType =
     | Coffee of string
     | Soda of string
     | Other of string
-//    | Latte
-//    | Cappuccino
-//    | Cortado
-//    | Monster
-//    | Redbull
-//    | Tuborg
-//    | Smoothie
-//    | Drikkeyoghurt
-//    | Sodavand;;
 
 type Drink = {DrinkType: DrinkType; Form: Form; Size: Size}
 
@@ -82,10 +56,11 @@ let bcssCanteenDrinkAgent = MailboxProcessor<CanteenMessage>.Start(fun inbox->
     }
     msgLoop)
 
+//program test
 let c = LeaveAComment("Aloha")
 bcssCanteenDrinkAgent.Post(c)
 
 
-let x = {DrinkType = Coffee("Latte"); Form = Cup; Size = Medium};;
-let o = OrderDrink(x, 3)
+let latte = {DrinkType = Coffee("Latte"); Form = Cup; Size = Medium};;
+let o = OrderDrink(latte, 3)
 bcssCanteenDrinkAgent.Post(o)
